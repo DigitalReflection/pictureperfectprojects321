@@ -175,10 +175,10 @@ def inspect_local_cloudflare_setup() -> None:
     print("That means Cloudflare Git auto-configured this project as a Worker/static-assets deploy.")
     print("This lines up with the live *.workers.dev URL.")
     text = wrangler_file.read_text(encoding="utf-8", errors="replace")
-    if '"pattern": "pictureperfectprojects321.com/*"' in text:
+    if '"custom_domain": true' in text and '"pattern": "pictureperfectprojects321.com"' in text:
         print("Custom domain routes are present in wrangler.jsonc.")
     else:
-        print("Custom domain routes are missing from wrangler.jsonc.")
+        print("Custom domain routes are missing or still using the wrong route type in wrangler.jsonc.")
 
 
 def detect_service_mode() -> str:
@@ -345,7 +345,7 @@ def ensure_worker_dns(
 
     print_section("Worker route note")
     print("This repo is configured as a Worker/static-assets app.")
-    print("The latest commit already adds custom-domain routes in wrangler.jsonc.")
+    print("The latest commit adds custom-domain host routes in wrangler.jsonc.")
     print("After DNS cleanup, redeploy the latest commit in Cloudflare so those routes go live.")
 
 
