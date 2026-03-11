@@ -56,7 +56,8 @@ python scripts/cloudflare_domain_repair.py fix --ssl-mode full
 
 The script will:
 - remove known bad Namecheap parking records
-- ensure the apex domain and `www` are attached to the Pages project
+- detect whether this repo is using Cloudflare Pages or a Worker/static-assets deploy
+- ensure the apex domain and `www` are attached to the Pages project when running in Pages mode
 - optionally set the zone SSL mode
 - re-check public DNS and HTTPS at the end
 

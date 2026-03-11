@@ -181,6 +181,10 @@ def inspect_local_cloudflare_setup() -> None:
         print("Custom domain routes are missing from wrangler.jsonc.")
 
 
+def detect_service_mode() -> str:
+    return "worker" if Path("wrangler.jsonc").exists() else "pages"
+
+
 def summarize_dns_response(name: str, record_type: str, payload: Dict[str, Any]) -> None:
     status = payload.get("Status")
     answers = payload.get("Answer", [])
@@ -304,6 +308,47 @@ def ensure_pages_domains(
             print(f"  error: {error_message}")
 
 
+def ensure_worker_dns(
+    client: CloudflareClient,
+    *,
+    zone_id: str,
+    domain: str,
+    include_www: bool,
+    ssl_mode: Optional[str],
+) -> None:
+    target_domains = [domain]
+    if include_www:
+        target_domains.append(f"www.{domain}")
+
+    print_section("Worker DNS cleanup")
+    for fqdn in target_domains:
+        records = client.list_dns_records(zone_id, fqdn)
+        if records:
+            print(f"{fqdn}:")
+            for record in records:
+                print(
+                    f"  - {record.get('type')} proxied={record.get('proxied')} "
+                    f"content={record.get('content')}"
+                )
+        else:
+            print(f"{fqdn}: no DNS records found in the Cloudflare zone")
+
+        parking = needs_parking_cleanup(records)
+        for record in parking:
+            print(f"Deleting bad record on {fqdn}: {record.get('type')} -> {record.get('content')}")
+            client.delete_dns_record(zone_id, record["id"])
+
+    if ssl_mode:
+        print_section("SSL mode")
+        ssl_result = client.patch_zone_ssl(zone_id, ssl_mode)
+        print(f"Zone SSL mode set to: {ssl_result.get('value')}")
+
+    print_section("Worker route note")
+    print("This repo is configured as a Worker/static-assets app.")
+    print("The latest commit already adds custom-domain routes in wrangler.jsonc.")
+    print("After DNS cleanup, redeploy the latest commit in Cloudflare so those routes go live.")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Audit and repair Cloudflare domain wiring.")
     parser.add_argument("mode", choices=["audit", "fix"], help="Run a public audit or apply Cloudflare fixes.")
@@ -317,6 +362,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--account-id", default=env("CF_ACCOUNT_ID"))
     parser.add_argument("--zone-id", default=env("CF_ZONE_ID"))
     parser.add_argument("--api-token", default=env("CF_API_TOKEN"))
+    parser.add_argument(
+        "--service",
+        default="auto",
+        choices=["auto", "pages", "worker"],
+        help="Target the Pages API flow, the Worker DNS flow, or auto-detect from the repo.",
+    )
     parser.add_argument("--skip-www", action="store_true", help="Only manage the apex domain.")
     parser.add_argument(
         "--ssl-mode",
@@ -341,8 +392,9 @@ def main() -> int:
             print("\nCF_API_TOKEN is required for fix mode.", file=sys.stderr)
             return 2
         if not args.account_id:
-            print("\nCF_ACCOUNT_ID is required for fix mode.", file=sys.stderr)
-            return 2
+            if args.service == "pages" or (args.service == "auto" and detect_service_mode() == "pages"):
+                print("\nCF_ACCOUNT_ID is required for Pages fix mode.", file=sys.stderr)
+                return 2
 
         client = CloudflareClient(args.api_token)
         zone_id = args.zone_id
@@ -351,15 +403,26 @@ def main() -> int:
             zone_id = zone["id"]
             print(f"\nResolved zone id: {zone_id}")
 
-        ensure_pages_domains(
-            client,
-            account_id=args.account_id,
-            project_name=args.project,
-            zone_id=zone_id,
-            domain=args.domain,
-            include_www=not args.skip_www,
-            ssl_mode=args.ssl_mode,
-        )
+        service = detect_service_mode() if args.service == "auto" else args.service
+        print(f"\nUsing Cloudflare service mode: {service}")
+        if service == "pages":
+            ensure_pages_domains(
+                client,
+                account_id=args.account_id,
+                project_name=args.project,
+                zone_id=zone_id,
+                domain=args.domain,
+                include_www=not args.skip_www,
+                ssl_mode=args.ssl_mode,
+            )
+        else:
+            ensure_worker_dns(
+                client,
+                zone_id=zone_id,
+                domain=args.domain,
+                include_www=not args.skip_www,
+                ssl_mode=args.ssl_mode,
+            )
 
         print_section("Re-checking public DNS and HTTPS")
         time.sleep(2)
