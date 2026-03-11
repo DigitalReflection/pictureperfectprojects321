@@ -1,0 +1,17 @@
+﻿# Deployment artifacts
+site.zip
+*.zip
+*.rar
+
+temp.txt
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node (future-proof)
+node_modules/
+dist/
+build/
