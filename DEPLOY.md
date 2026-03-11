@@ -72,3 +72,21 @@ Then visit:
 - `http://localhost:4173/`
 - `http://localhost:4173/discountoffer/`
 - `http://localhost:4173/thank-you/`
+
+## Pushing updates later
+This repo is already connected to GitHub and Cloudflare is deploying from `main`.
+
+To ship an update from PowerShell, run:
+
+```powershell
+cd "C:\Users\Anon\Desktop\QR Landing"
+.\publish.ps1 -Message "Describe your update here"
+```
+
+That script will:
+- pull the latest `main`
+- stage your changes
+- create the commit
+- push to GitHub
+
+After that, Cloudflare should auto-deploy the new version.
