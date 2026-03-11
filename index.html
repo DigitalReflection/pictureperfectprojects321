@@ -1,19 +1,446 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Redirecting to Discount Offer</title>
-  <meta http-equiv="refresh" content="0;url=/discountoffer">
-  <link rel="canonical" href="/discountoffer">
+  <title>Plantation Oaks Painting Offer</title>
+  <meta name="description" content="Get your home painted while we are still in Plantation Oaks. 10% off any exterior paint job.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://i.imgur.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#0b0f14; color:#f6f3ea; display:flex; align-items:center; justify-content:center; height:100vh; }
-    a { color:#d9b36c; }
+    :root {
+      --bg: #090c11;
+      --bg-2: #141b26;
+      --panel: rgba(255, 255, 255, 0.05);
+      --line: rgba(255, 222, 166, 0.18);
+      --text: #f6f0e4;
+      --muted: #d4c8b1;
+      --gold: #d9b36c;
+      --gold-2: #f0c674;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.42);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(216, 137, 43, 0.10), transparent 28%),
+        linear-gradient(180deg, #06080d 0%, var(--bg) 40%, var(--bg-2) 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 14% 25%, rgba(255, 196, 102, 0.10), transparent 20%),
+        radial-gradient(circle at 82% 10%, rgba(0, 0, 0, 0.55), transparent 34%),
+        linear-gradient(180deg, rgba(255, 208, 140, 0.03), rgba(0, 0, 0, 0));
+      mix-blend-mode: screen;
+      opacity: 0.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 16px 14px 42px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+        linear-gradient(135deg, rgba(217, 179, 108, 0.06), rgba(0, 0, 0, 0));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .headline {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      color: var(--gold-2);
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    .subhead,
+    .copy,
+    .note,
+    .side-copy,
+    footer {
+      color: var(--muted);
+    }
+
+    .subhead {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .offer {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(240, 198, 116, 0.38);
+      border-radius: 16px;
+      background:
+        linear-gradient(115deg, rgba(217, 179, 108, 0.22), rgba(240, 198, 116, 0.10)),
+        linear-gradient(135deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+      color: var(--gold-2);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.24);
+    }
+
+    .btn.call {
+      background: linear-gradient(120deg, var(--gold-2), var(--gold));
+      color: #261701;
+    }
+
+    .btn.text {
+      background: linear-gradient(120deg, #f7d08c, #d9b36c);
+      color: #291800;
+    }
+
+    .btn.email {
+      background: linear-gradient(120deg, #e7e9ef, #cfd3db);
+      color: #101826;
+    }
+
+    .btn.anchor {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .proof {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(240, 198, 116, 0.22);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(240, 198, 116, 0.06));
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .logo-panel {
+      display: grid;
+      place-items: center;
+      min-height: 220px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(240, 198, 116, 0.28);
+      background:
+        radial-gradient(circle at 30% 24%, rgba(240, 198, 116, 0.14), transparent 38%),
+        rgba(255, 255, 255, 0.02);
+    }
+
+    .logo {
+      display: block;
+      width: min(100%, 250px);
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+    }
+
+    .section {
+      margin-top: 16px;
+      padding: 18px;
+    }
+
+    .section h2,
+    .section h3 {
+      margin: 0 0 8px;
+      line-height: 1.05;
+    }
+
+    .section h2 {
+      font-size: 1.55rem;
+    }
+
+    .section h3 {
+      font-size: 1.25rem;
+      color: var(--gold-2);
+    }
+
+    .copy,
+    .side-copy {
+      margin: 0 0 14px;
+      line-height: 1.55;
+      font-size: 0.98rem;
+    }
+
+    .form-shell {
+      display: grid;
+      gap: 16px;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(240, 198, 116, 0.70);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .submit {
+      min-height: 54px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(120deg, var(--gold), var(--gold-2));
+      color: #261701;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .side-card {
+      height: 100%;
+      padding: 18px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-divider {
+      height: 1px;
+      margin: 8px 0 2px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 16px 8px 0;
+      text-align: center;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 900px) {
+      .wrap {
+        padding: 22px 18px 54px;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        align-items: center;
+        padding: 24px;
+      }
+
+      .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .proof {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .form-shell {
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+        align-items: stretch;
+      }
+    }
   </style>
 </head>
 <body>
-  <p>Redirecting to <a href="/discountoffer">/discountoffer</a>…</p>
-  <script>window.location.replace('/discountoffer');</script>
+  <div class="wrap">
+    <section class="card hero">
+      <div>
+        <h1 class="headline">PLANTATION OAKS - THIS IS YOUR WINDOW.</h1>
+        <p class="subhead">We're currently working with homeowners in Plantation Oaks and have availability for a limited number of exterior paint projects.</p>
+        <div class="offer">10% OFF ANY EXTERIOR PAINT JOB. Only available while our crew is working inside Plantation Oaks.</div>
+        <div class="actions">
+          <a class="btn call" href="tel:+13212101397">Call (321) 210-1397</a>
+          <a class="btn text js-sms-link" href="sms:+13212101397?body=Hi%2C%20I%20scanned%20the%20discount%20offer%20QR%20code%20and%20want%20a%20quote.">Text for 10% Offer</a>
+          <a class="btn email" href="mailto:pictureperfectpro321@gmail.com?subject=Quote%20Request&body=Hi%2C%20I%20scanned%20the%20discount%20offer%20QR%20code%20and%20want%20a%20quote.">Email Us</a>
+          <a class="btn anchor" href="#quote-form">Book Free Estimate</a>
+        </div>
+        <div class="proof">
+          <div class="pill">Veteran Owned &amp; Operated</div>
+          <div class="pill">5-Star Rated</div>
+          <div class="pill">Professional, Clean, On-Time Crew</div>
+        </div>
+      </div>
+      <div class="logo-panel">
+        <img
+          class="logo"
+          src="https://i.imgur.com/tfSh82J.png"
+          alt="Picture Perfect Painters logo"
+          width="1596"
+          height="1596"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        >
+      </div>
+    </section>
+
+    <section class="card section" id="quote-form">
+      <div class="form-shell">
+        <div>
+          <h2>Quick Quote Form</h2>
+          <p class="copy">Fastest option: text us photos at (321) 210-1397. If you prefer, use the form below and we will follow up fast.</p>
+          <form action="https://formspree.io/f/xqeypwrj" method="POST" accept-charset="UTF-8">
+            <div>
+              <label for="name">Name *</label>
+              <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="phone">Phone *</label>
+              <input id="phone" name="phone" type="tel" placeholder="(321) 210-1397" autocomplete="tel" required>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div>
+              <label for="address">Address</label>
+              <input id="address" name="address" type="text" placeholder="Project address" autocomplete="street-address">
+            </div>
+            <div>
+              <label for="project_type">Project type</label>
+              <select id="project_type" name="project_type">
+                <option>Interior Painting</option>
+                <option>Exterior Painting</option>
+                <option>Driveway / Concrete</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your project"></textarea>
+            </div>
+            <input type="hidden" name="_redirect" value="https://www.pictureperfectprojects321.com/thank-you/">
+            <button class="submit" type="submit">Request Quote</button>
+          </form>
+        </div>
+
+        <aside class="card side-card">
+          <h3>Call Carlos Today</h3>
+          <p class="side-copy">(321) 210-1397</p>
+          <p class="side-copy">Text us a few exterior photos and your address for the fastest estimate.</p>
+          <div class="stack">
+            <a class="btn text js-sms-link" href="sms:+13212101397?body=Hi%2C%20I%20scanned%20the%20discount%20offer%20QR%20code%20and%20want%20a%20quote.">Text photos now</a>
+            <a class="btn call" href="tel:+13212101397">Call the owner</a>
+          </div>
+          <div class="mini-divider"></div>
+          <p class="note">After you reach out, we will follow up quickly so you can lock in the offer while the crew is still nearby.</p>
+        </aside>
+      </div>
+    </section>
+
+    <footer>
+      <div>Service area: Plantation Oaks and nearby</div>
+      <div>Hours: Mon-Sat 8am-7pm</div>
+      <div>Prefer texting? Send photos to (321) 210-1397 for the fastest quote.</div>
+    </footer>
+  </div>
+
+  <script>
+    // iOS prefers "&body=" for sms links when a recipient is present.
+    (function () {
+      var isApple = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (!isApple) return;
+
+      var links = document.querySelectorAll(".js-sms-link");
+      links.forEach(function (link) {
+        link.href = link.href.replace("?body=", "&body=");
+      });
+    }());
+  </script>
 </body>
 </html>
-

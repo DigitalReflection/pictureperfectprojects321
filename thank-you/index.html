@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thanks - Picture Perfect Painters</title>
+  <meta name="description" content="Thanks for reaching out to Picture Perfect Painters.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090c11;
+      --bg-2: #141b26;
+      --line: rgba(255, 222, 166, 0.18);
+      --text: #f6f0e4;
+      --muted: #d4c8b1;
+      --gold: #d9b36c;
+      --gold-2: #f0c674;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.42);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(240, 198, 116, 0.12), transparent 30%),
+        radial-gradient(circle at top right, rgba(216, 137, 43, 0.10), transparent 28%),
+        linear-gradient(180deg, #06080d 0%, var(--bg) 40%, var(--bg-2) 100%);
+    }
+
+    .card {
+      width: min(100%, 640px);
+      padding: 28px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03)),
+        linear-gradient(135deg, rgba(217, 179, 108, 0.06), rgba(0, 0, 0, 0));
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1;
+      color: var(--gold-2);
+    }
+
+    p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.24);
+    }
+
+    .btn.primary {
+      background: linear-gradient(120deg, var(--gold-2), var(--gold));
+      color: #261701;
+    }
+
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Thank You</h1>
+    <p>Your request was sent. We will reach out soon to help you lock in your Plantation Oaks offer.</p>
+    <div class="actions">
+      <a class="btn primary" href="tel:+13212101397">Call (321) 210-1397</a>
+      <a class="btn secondary" href="/discountoffer/">Back to the offer page</a>
+    </div>
+  </main>
+</body>
+</html>

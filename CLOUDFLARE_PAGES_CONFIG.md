@@ -1,19 +1,35 @@
-﻿# Cloudflare Pages settings
+# Cloudflare Pages settings
 
-**Project type:** Static site
+## Project type
+- Static site
 
-**Build command:** (leave blank / None)
+## Build configuration
+- Framework preset: None
+- Build command: leave blank
+- Build output directory: `.`
+- Root directory: leave blank
 
-**Output directory:** .
+## Routes
+- `/` -> `index.html`
+- `/discountoffer/` -> `discountoffer/index.html`
+- `/thank-you/` -> `thank-you/index.html`
 
-**Root redirect:** _redirects file contains / /discountoffer 302
+No redirect rules are required for this setup.
 
-**Fallback for nested discount routes:** _redirects also contains /discountoffer/* /discountoffer/index.html 200
+## Custom domains
+- Add `pictureperfectprojects321.com`
+- Add `www.pictureperfectprojects321.com` if you want both hostnames live
+- Point both hostnames to the Pages project hostname with proxied CNAME records
 
-**Production branch:** main (or your default branch)
+## SSL
+- Start with SSL/TLS mode `Full`
+- Switch to `Full (strict)` once the Pages edge certificate is active
+- Do not use `Flexible`
 
-**Environment variables:** none required
+## Form handling
+- Form posts to Formspree: `https://formspree.io/f/xqeypwrj`
+- Success redirect: `https://www.pictureperfectprojects321.com/thank-you/`
 
-**Custom domain:** pictureperfectprojects321.com (add www if desired)
-
-**Asset paths:** referenced with root-relative URLs (e.g., /assets/...) to work from /discountoffer.
+## Assets
+- Logo loads from `https://i.imgur.com/tfSh82J.png`
+- All remote assets use HTTPS

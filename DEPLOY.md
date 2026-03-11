@@ -1,35 +1,51 @@
-﻿# Deploying to Cloudflare Pages
+# Deploying to Cloudflare Pages
 
-This project is a static site (HTML/CSS/JS only). No build step is required.
+This project is a plain static site. There is no build step.
 
 ## Build settings
-- Build command: _None (leave blank)_
-- Output directory: . (root of the repo)
+- Build command: leave blank
+- Output directory: `.`
+- Framework preset: None
 
-## Files relevant to Pages
-- _redirects — root redirect and SPA-style fallback for /discountoffer
-- index.html — root redirect page
-- discountoffer/index.html — primary landing page
+## Route setup
+- `/` serves the main landing page directly from `index.html`
+- `/discountoffer/` serves the same landing page from `discountoffer/index.html`
+- `/thank-you/` serves the form confirmation page from `thank-you/index.html`
+
+This avoids redirect loops and works cleanly with Cloudflare Pages static hosting.
 
 ## Deployment steps
-1) Push this repo to your Git provider (GitHub/GitLab/Bitbucket).
-2) In Cloudflare Pages, create a new project and connect this repo.
-3) Set build command to **None** (blank) and output directory to **.**.
-4) Deploy. Pages will publish the static files and apply _redirects.
-5) Attach the custom domain:
-   - In Pages project → **Custom domains** → **Set up a custom domain**.
-   - Enter pictureperfectprojects321.com and follow DNS prompt. A CNAME to the Pages hostname will be suggested; create/update the DNS record in Cloudflare DNS.
-   - Add the www subdomain if desired, CNAME to the same target.
-6) Verify HTTPS has issued (usually within a few minutes).
+1) Push this repo to GitHub.
+2) In Cloudflare Pages, create a project and connect the repo.
+3) Use these settings:
+   - Framework preset: None
+   - Build command: leave blank
+   - Build output directory: `.`
+4) Deploy the site.
+5) In the Pages project, open **Custom domains** and add:
+   - `pictureperfectprojects321.com`
+   - `www.pictureperfectprojects321.com` (optional, but recommended)
+6) Let Cloudflare create the DNS records automatically. If you must do it manually:
+   - Remove old A/AAAA records for the root and `www`
+   - Create CNAME `@` -> your Pages hostname
+   - Create CNAME `www` -> your Pages hostname
+   - Leave the orange cloud proxy enabled
+7) In **SSL/TLS**, set the mode to **Full**. After the edge certificate shows **Active**, you can switch to **Full (strict)**.
 
-## Test the redirect
-- Open https://www.pictureperfectprojects321.com/ → should 302 to /discountoffer.
-- Open https://www.pictureperfectprojects321.com/discountoffer → should load the landing page.
-- Refresh while on /discountoffer to confirm it still loads (handled by _redirects).
+## Test after deploy
+- `https://www.pictureperfectprojects321.com/` should load the landing page
+- `https://www.pictureperfectprojects321.com/discountoffer/` should load the same offer page
+- `https://www.pictureperfectprojects321.com/thank-you/` should load the thank-you page
+- Submit the quote form and confirm Formspree redirects to `/thank-you/`
 
 ## Local preview (optional)
-- Serve locally with any static server: 
-px serve . then visit http://localhost:3000/discountoffer.
+Run:
 
-## Notes
-- Do not remove _redirects; it enforces the root → /discountoffer behavior and keeps nested routes working if you add more under /discountoffer.
+```powershell
+python -m http.server 4173
+```
+
+Then visit:
+- `http://localhost:4173/`
+- `http://localhost:4173/discountoffer/`
+- `http://localhost:4173/thank-you/`
