@@ -8,6 +8,16 @@
   "assets": {
     "directory": "."
   },
+  "routes": [
+    {
+      "pattern": "pictureperfectprojects321.com/*",
+      "zone_name": "pictureperfectprojects321.com"
+    },
+    {
+      "pattern": "www.pictureperfectprojects321.com/*",
+      "zone_name": "pictureperfectprojects321.com"
+    }
+  ],
   "compatibility_flags": [
     "nodejs_compat"
   ]

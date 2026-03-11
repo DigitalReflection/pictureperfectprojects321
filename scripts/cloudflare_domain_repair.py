@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from pathlib import Path
 import ssl
 import sys
 import time
@@ -162,6 +163,22 @@ def print_section(title: str) -> None:
     print()
     print(title)
     print("-" * len(title))
+
+
+def inspect_local_cloudflare_setup() -> None:
+    wrangler_file = Path("wrangler.jsonc")
+    if not wrangler_file.exists():
+        return
+
+    print_section("Local Cloudflare config")
+    print("Found wrangler.jsonc in this repo.")
+    print("That means Cloudflare Git auto-configured this project as a Worker/static-assets deploy.")
+    print("This lines up with the live *.workers.dev URL.")
+    text = wrangler_file.read_text(encoding="utf-8", errors="replace")
+    if '"pattern": "pictureperfectprojects321.com/*"' in text:
+        print("Custom domain routes are present in wrangler.jsonc.")
+    else:
+        print("Custom domain routes are missing from wrangler.jsonc.")
 
 
 def summarize_dns_response(name: str, record_type: str, payload: Dict[str, Any]) -> None:
@@ -314,6 +331,7 @@ def main() -> int:
     args = parse_args()
 
     try:
+        inspect_local_cloudflare_setup()
         audit_public(args.domain, args.worker_url)
 
         if args.mode == "audit":
