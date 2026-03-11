@@ -38,6 +38,28 @@ This avoids redirect loops and works cleanly with Cloudflare Pages static hostin
 - `https://www.pictureperfectprojects321.com/thank-you/` should load the thank-you page
 - Submit the quote form and confirm Formspree redirects to `/thank-you/`
 
+## Automated Cloudflare audit / repair
+You can audit the public DNS and HTTPS state with:
+
+```powershell
+python scripts/cloudflare_domain_repair.py audit
+```
+
+To let the script clean up bad DNS records and re-attach the custom domains to Cloudflare Pages, set:
+
+```powershell
+$env:CF_API_TOKEN="your-token"
+$env:CF_ACCOUNT_ID="your-account-id"
+$env:CF_PAGES_PROJECT_NAME="pictureperfectprojects321"
+python scripts/cloudflare_domain_repair.py fix --ssl-mode full
+```
+
+The script will:
+- remove known bad Namecheap parking records
+- ensure the apex domain and `www` are attached to the Pages project
+- optionally set the zone SSL mode
+- re-check public DNS and HTTPS at the end
+
 ## Local preview (optional)
 Run:
 
